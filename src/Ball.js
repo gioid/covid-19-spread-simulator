@@ -1,6 +1,7 @@
 import {
   BALL_RADIUS,
   COLORS,
+  BORDER_COLOR_WITH_APP,
   MORTALITY_PERCENTATGE,
   TICKS_TO_RECOVER,
   RUN,
@@ -12,7 +13,7 @@ import { checkCollision, calculateChangeDirection } from './collisions.js'
 const diameter = BALL_RADIUS * 2
 
 export class Ball {
-  constructor ({ x, y, id, state, sketch, hasMovement }) {
+  constructor ({ x, y, id, state, sketch, hasMovement, hasApp }) {
     this.x = x
     this.y = y
     this.vx = sketch.random(-1, 1) * SPEED
@@ -22,6 +23,7 @@ export class Ball {
     this.state = state
     this.timeInfected = 0
     this.hasMovement = hasMovement
+    this.hasApp = hasApp
     this.hasCollision = true
     this.survivor = false
   }
@@ -43,6 +45,9 @@ export class Ball {
         this.state = STATES.recovered
         RUN.results[STATES.infected]--
         RUN.results[STATES.recovered]++
+        // once recovered, we can move again
+        // TODO: this cause rendering flickering, try to understand why and fix it
+        this.hasMovement = true
       } else {
         this.timeInfected++
       }
@@ -54,7 +59,7 @@ export class Ball {
 
     for (let i = this.id + 1; i < others.length; i++) {
       const otherBall = others[i]
-      const { state, x, y } = otherBall
+      const { state, x, y, hasApp } = otherBall
       if (state === STATES.death) continue
 
       const dx = x - this.x
@@ -77,6 +82,16 @@ export class Ball {
           this.state = otherBall.state = STATES.infected
           RUN.results[STATES.infected]++
           RUN.results[STATES.well]--
+
+          if (this.hasApp && hasApp) {
+            // both users have the app, so the app must signal the infection risk
+            // and the just infected person should stay at home
+            if (state === STATES.infected) {
+              this.hasMovement = false
+            } else {
+              otherBall.hasMovement = false
+            }
+          }
         }
       }
     }
@@ -105,7 +120,14 @@ export class Ball {
 
   render () {
     const color = COLORS[this.state]
-    this.sketch.noStroke()
+
+    // apply a border to the users with the app, to identify them
+    if (this.hasApp) {
+      this.sketch.stroke(BORDER_COLOR_WITH_APP)
+    } else {
+      this.sketch.noStroke()
+    }
+
     this.sketch.fill(color)
     this.sketch.ellipse(this.x, this.y, diameter, diameter)
   }

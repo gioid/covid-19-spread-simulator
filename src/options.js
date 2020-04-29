@@ -21,6 +21,8 @@ export const COLORS = {
   well: '#63C8F2'
 }
 
+export const BORDER_COLOR_WITH_APP = '#000000'
+
 export const STATES = {
   infected: 'infected',
   well: 'well',
@@ -52,6 +54,7 @@ export const SPEED = 1
 export const TOTAL_TICKS = 1600
 export const TICKS_TO_RECOVER = 500
 export const STATIC_PEOPLE_PERCENTATGE = 25
+export const WITH_APP_PERCENTAGE = 80
 
 export const resetRun = () => {
   RUN.results = { ...STARTING_BALLS }
