@@ -88,12 +88,16 @@ export class Ball {
           RUN.results[STATES.well]--
 
           if (this.hasApp && hasApp) {
-            // both users have the app, so the app must signal the infection risk
-            // and the just infected person should stay at home
-            if (state === STATES.infected) {
-              this.hasMovement = false
-            } else {
-              otherBall.hasMovement = false
+            const appFailedSignal = Math.random() * 100 < RUN.filters.appFailurePercentage
+            const personFollowIsolation = Math.random() * 100 < RUN.filters.autoIsolationPercentage
+            if (!appFailedSignal && personFollowIsolation) {
+              // both users have the app and the app notified the infection risk:
+              // the person just infected should stay at home
+              if (state === STATES.infected) {
+                this.hasMovement = false
+              } else {
+                otherBall.hasMovement = false
+              }
             }
           }
         }

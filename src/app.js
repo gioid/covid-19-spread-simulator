@@ -12,7 +12,9 @@ import {
   replayButton,
   deathFilter,
   stayHomeFilter,
-  appPercentageSelect
+  appPercentageSelect,
+  appFailureRateSelect,
+  appConformistsPercentageSelect
 } from './dom.js'
 
 import { Ball } from './Ball.js'
@@ -92,6 +94,18 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
 
     appPercentageSelect.onchange = (e) => {
       RUN.filters.appPercentage = parseInt(e.target.value)
+      startBalls()
+      resetValues()
+    }
+
+    appFailureRateSelect.onchange = (e) => {
+      RUN.filters.appFailurePercentage = parseInt(e.target.value)
+      startBalls()
+      resetValues()
+    }
+
+    appConformistsPercentageSelect.onchange = (e) => {
+      RUN.filters.autoIsolationPercentage = parseInt(e.target.value)
       startBalls()
       resetValues()
     }

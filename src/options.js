@@ -1,7 +1,9 @@
 const DEFAULT_FILTERS = {
   death: false,
   stayHome: false,
-  appPercentage: 0
+  appPercentage: 0,
+  appFailurePercentage: 0, // percentage of failure in the app (bugs and signal problems)
+  autoIsolationPercentage: 100 // percentage of infected people following the isolation rule
 }
 
 export const CANVAS_SIZE = {
