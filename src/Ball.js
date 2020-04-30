@@ -46,7 +46,6 @@ export class Ball {
         RUN.results[STATES.infected]--
         RUN.results[STATES.recovered]++
         // once recovered, we can move again
-        // TODO: this cause rendering flickering, try to understand why and fix it
         this.hasMovement = true
       } else {
         this.timeInfected++
