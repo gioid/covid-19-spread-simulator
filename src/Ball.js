@@ -68,10 +68,15 @@ export class Ball {
       if (checkCollision({ dx, dy, diameter: BALL_RADIUS * 2 })) {
         const { ax, ay } = calculateChangeDirection({ dx, dy })
 
-        this.vx -= ax
-        this.vy -= ay
-        otherBall.vx = ax
-        otherBall.vy = ay
+        // apply the movement just to balls that can move
+        if (this.hasMovement) {
+          this.vx -= ax
+          this.vy -= ay
+        }
+        if (otherBall.hasMovement) {
+          otherBall.vx = ax
+          otherBall.vy = ay
+        }
 
         // both has same state, so nothing to do
         if (this.state === state) return
