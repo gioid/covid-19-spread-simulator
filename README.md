@@ -27,3 +27,15 @@ This project is using EcmaScript Modules, therefore, only browsers with this com
 - I18N
 - New strategies
 - Improve the code so I don't get so ashamed. 😳
+
+## gioid's enhancements
+
+I forked the midudev's repo and applied the following changes:
+
+- percentage of people with contact-tracing app, that notify infected matches and suggest auto-isolation
+- failure rate of contact-tracing app, so the app cannot notify an infected match due to physical/software issues
+- percentage of conformists, because a person notified of the infected match can choose to avoid auto-isolation
+
+You can see the result in action at the following link (thank you GitHub Pages): 
+
+https://gioid.github.io/covid-19-spread-simulator/src/
