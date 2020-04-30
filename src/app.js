@@ -5,14 +5,14 @@ import {
   STARTING_BALLS,
   RUN,
   STATIC_PEOPLE_PERCENTATGE,
-  STATES,
-  WITH_APP_PERCENTAGE
+  STATES
 } from './options.js'
 
 import {
   replayButton,
   deathFilter,
-  stayHomeFilter
+  stayHomeFilter,
+  appPercentageSelect
 } from './dom.js'
 
 import { Ball } from './Ball.js'
@@ -37,7 +37,7 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
           ? sketch.random(0, 100) < STATIC_PEOPLE_PERCENTATGE || state === STATES.infected
           : true
 
-        const hasApp = (Math.random() * 100) <= WITH_APP_PERCENTAGE
+        const hasApp = (Math.random() * 100) <= RUN.filters.appPercentage
 
         balls[id] = new Ball({
           id,
@@ -86,6 +86,12 @@ export const canvas = new window.p5(sketch => { // eslint-disable-line
 
     stayHomeFilter.onchange = () => {
       RUN.filters.stayHome = !RUN.filters.stayHome
+      startBalls()
+      resetValues()
+    }
+
+    appPercentageSelect.onchange = (e) => {
+      RUN.filters.appPercentage = parseInt(e.target.value)
       startBalls()
       resetValues()
     }
