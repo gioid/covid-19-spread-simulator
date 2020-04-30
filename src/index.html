@@ -94,6 +94,16 @@
       transform: scaleY(-1);
     }
 
+    #options {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    #options label {
+      margin-bottom: 16px;
+    }
+
     #count {
       display: flex;
       justify-content: space-around;
@@ -179,7 +189,7 @@
   <h1>COVID-19 Spread Simulator 🦠</h1>
   <main>
     <header>
-      <form>
+      <form id="options">
         <label aria-label="Change percentage of people with app" title="People with app">
           App diffusion &nbsp;
           <select id="app-percentage">
